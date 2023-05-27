@@ -1,38 +1,72 @@
 #!/bin/bash
 
+
+
+
+
+
+
+
+
+
 # Check if any arguments are provided
 if [ $# -eq 0 ]; then
   echo "Please provide IP addresses as arguments or a text file containing the IP addresses."
-  echo "Usage: $0 [options] [IP_address1] [IP_address2] ..."
+  echo "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
   echo "Options:"
   echo "  -h, --help    Display this help message"
-  echo "  -f, --filename Read IP addresses from a file"
+  echo "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
+  echo "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
   exit 1
 fi
 
-# Check if --help or -h is provided
-while getopts ":hf:" opt; do
+# Initialize user variable with the current username as the default value
+user=$(whoami)
+u_flag=0
+
+
+# Transform long options to short ones
+for arg in "$@"; do
+  shift
+  case "$arg" in
+    '--help')    set -- "$@" '-h' ;;
+    '--file')    set -- "$@" '-f' ;;
+    '--user')    set -- "$@" '-u' ;;
+    *)           set -- "$@" "$arg" ;;
+  esac
+done
+
+
+# Check if --help, -h, --user, or -u is provided
+while getopts ":hf:u:" opt; do
   case $opt in
     h)
-      echo "Usage: $0 [options] [IP_address1] [IP_address2] ..."
+      echo "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
       echo "Options:"
       echo "  -h, --help    Display this help message"
-      echo "  -f, --filename Read IP addresses from a file"
+      echo "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
+      echo "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
       exit 0
       ;;
     f)
       filename="$OPTARG"
       ;;
+    u)
+      user="$OPTARG"
+      u_flag=1
+      ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
-      echo "Usage: $0 [options] [IP_address1] [IP_address2] ..."
+      echo "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
       echo "Options:"
       echo "  -h, --help    Display this help message"
-      echo "  -f, --filename Read IP addresses from a file"
+      echo "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
+      echo "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
       exit 1
       ;;
   esac
 done
+
 
 # Check if the .ssh directory exists in the user's home directory
 if [ -d "$HOME/.ssh" ]; then
@@ -66,21 +100,42 @@ fi
 # Remove the options from the arguments
 shift $((OPTIND-1))
 
+
 # Read IP addresses from a file or from the arguments
 if [ -n "$filename" ]; then
-  while read -r ip; do
-    if [ -n "$ip" ]; then
-      IPS+=("$ip")
+  while read -r entry; do
+    if [[ $entry =~ ^(.+)@(.+)$ ]]; then
+      user="${BASH_REMATCH[1]}"
+      ip="${BASH_REMATCH[2]}"
+      IPS+=("$user@$ip")
+    elif [[ $entry =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      ip="$entry"
+      if [ $u_flag -eq 0 ]; then
+        IPS+=("$ip")
+      else
+        IPS+=("$user@$ip")
+      fi
     fi
   done < "$filename"
 else
-  for ip in "$@"; do
-    IPS+=("$ip")
+  for entry in "${@:OPTIND}"; do
+    if [[ $entry =~ ^(.+)@(.+)$ ]]; then
+      user="${BASH_REMATCH[1]}"
+      ip="${BASH_REMATCH[2]}"
+      IPS+=("$user@$ip")
+    elif [[ $entry =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      ip="$entry"
+      if [ $u_flag -eq 0 ]; then
+        IPS+=("$ip")
+      else
+        IPS+=("$user@$ip")
+      fi
+    fi
   done
 fi
 
-for ip in "${IPS[@]}"; do
+for entry in "${IPS[@]}"; do
   # Copy the public key to the remote machine
-  echo "Copying SSH public key to $ip"
-  ssh-copy-id -i "$public_key" "$ip"
+  echo "Copying SSH public key to $entry"
+  ssh-copy-id -i "$public_key" "$entry"
 done
