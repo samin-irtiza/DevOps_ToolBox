@@ -125,7 +125,7 @@ if [ -n "$filename" ]; then
     fi
   done < "$filename"
 else
-  for entry in "${@:OPTIND}"; do
+  for entry in "${@}"; do
     if [[ $entry =~ ^(.+)@(.+)$ ]]; then
       user="${BASH_REMATCH[1]}"
       ip="${BASH_REMATCH[2]}"
