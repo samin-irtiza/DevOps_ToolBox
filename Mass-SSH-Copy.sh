@@ -1,21 +1,6 @@
 #!/bin/bash
 
 
-echo -e "\e[92m"
-echo $'/****************************/'
-echo $'/* Welcome to MASS SSH COPY */'
-echo $'/* Written by: samin_irtiza */'
-echo $'/****************************/'
-
-echo -e "\n"
-echo $' __  __    _    ____ ____    ____ ____  _   _    ____ ___  ______   __'
-echo $'|  \/  |  / \  / ___/ ___|  / ___/ ___|| | | |  / ___/ _ \|  _ \ \ / /'
-echo $'| |\/| | / _ \ \___ \___ \  \___ \___ \| |_| | | |  | | | | |_) \ V /'
-echo $'| |  | |/ ___ \ ___) |__) |  ___) |__) |  _  | | |__| |_| |  __/ | |'
-echo $'|_|  |_/_/   \_\____/____/  |____/____/|_| |_|  \____\___/|_|    |_|'
-echo -e "\e[0m"
-
-
 # Check if any arguments are provided
 if [ $# -eq 0 ]; then
   echo -e "Please provide IP addresses as arguments or a text file containing the IP addresses."
@@ -73,6 +58,21 @@ while getopts ":hf:u:" opt; do
       ;;
   esac
 done
+
+
+echo -e "\e[92m"
+echo $'/****************************/'
+echo $'/* Welcome to MASS SSH COPY */'
+echo $'/* Written by: samin_irtiza */'
+echo $'/****************************/'
+
+echo $' __  __    _    ____ ____    ____ ____  _   _    ____ ___  ______   __'
+echo $'|  \/  |  / \  / ___/ ___|  / ___/ ___|| | | |  / ___/ _ \|  _ \ \ / /'
+echo $'| |\/| | / _ \ \___ \___ \  \___ \___ \| |_| | | |  | | | | |_) \ V /'
+echo $'| |  | |/ ___ \ ___) |__) |  ___) |__) |  _  | | |__| |_| |  __/ | |'
+echo $'|_|  |_/_/   \_\____/____/  |____/____/|_| |_|  \____\___/|_|    |_|'
+echo -e "\e[0m"
+echo -e "\n"
 
 
 # Check if the .ssh directory exists in the user's home directory
