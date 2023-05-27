@@ -22,8 +22,8 @@ if [ $# -eq 0 ]; then
   echo -e "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
   echo -e "Options:"
   echo -e "  -h, --help    Display this help message"
-  echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
-  echo -e "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
+  echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n                Supports user@remote_ip format"
+  echo -e "  -u, --user    Specify the username for the SSH connection.\n                Uses the current username by default without the flag"
   exit 1
 fi
 
@@ -51,8 +51,8 @@ while getopts ":hf:u:" opt; do
       echo -e "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
       echo -e "Options:"
       echo -e "  -h, --help    Display this help message"
-      echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
-      echo -e "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
+      echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n                Supports user@remote_ip format"
+      echo -e "  -u, --user    Specify the username for the SSH connection.\n                Uses the current username by default without the flag"
       exit 0
       ;;
     f)
@@ -67,8 +67,8 @@ while getopts ":hf:u:" opt; do
       echo -e "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
       echo -e "Options:"
       echo -e "  -h, --help    Display this help message"
-      echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
-      echo -e "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
+      echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n                Supports user@remote_ip format"
+      echo -e "  -u, --user    Specify the username for the SSH connection.\n                Uses the current username by default without the flag"
       exit 1
       ;;
   esac
