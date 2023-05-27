@@ -1,27 +1,29 @@
 #!/bin/bash
 
 
-echo /****************************/
-echo /* Welcome to MASS SSH COPY */
-echo /* Written by: samin_irtiza */
-echo /****************************/
+echo -e "\e[92m"
+echo $'/****************************/'
+echo $'/* Welcome to MASS SSH COPY */'
+echo $'/* Written by: samin_irtiza */'
+echo $'/****************************/'
 
 echo -e "\n"
-echo  __  __    _    ____ ____    ____ ____  _   _    ____ ___  ______   __
-echo |  \/  |  / \  / ___/ ___|  / ___/ ___|| | | |  / ___/ _ \|  _ \ \ / /
-echo | |\/| | / _ \ \___ \___ \  \___ \___ \| |_| | | |  | | | | |_) \ V /
-echo | |  | |/ ___ \ ___) |__) |  ___) |__) |  _  | | |__| |_| |  __/ | |
-echo |_|  |_/_/   \_\____/____/  |____/____/|_| |_|  \____\___/|_|    |_|
+echo $' __  __    _    ____ ____    ____ ____  _   _    ____ ___  ______   __'
+echo $'|  \/  |  / \  / ___/ ___|  / ___/ ___|| | | |  / ___/ _ \|  _ \ \ / /'
+echo $'| |\/| | / _ \ \___ \___ \  \___ \___ \| |_| | | |  | | | | |_) \ V /'
+echo $'| |  | |/ ___ \ ___) |__) |  ___) |__) |  _  | | |__| |_| |  __/ | |'
+echo $'|_|  |_/_/   \_\____/____/  |____/____/|_| |_|  \____\___/|_|    |_|'
+echo -e "\e[0m"
 
 
 # Check if any arguments are provided
 if [ $# -eq 0 ]; then
-  echo "Please provide IP addresses as arguments or a text file containing the IP addresses."
-  echo "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
-  echo "Options:"
-  echo "  -h, --help    Display this help message"
-  echo "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
-  echo "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
+  echo -e "Please provide IP addresses as arguments or a text file containing the IP addresses."
+  echo -e "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
+  echo -e "Options:"
+  echo -e "  -h, --help    Display this help message"
+  echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
+  echo -e "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
   exit 1
 fi
 
@@ -46,11 +48,11 @@ done
 while getopts ":hf:u:" opt; do
   case $opt in
     h)
-      echo "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
-      echo "Options:"
-      echo "  -h, --help    Display this help message"
-      echo "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
-      echo "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
+      echo -e "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
+      echo -e "Options:"
+      echo -e "  -h, --help    Display this help message"
+      echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
+      echo -e "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
       exit 0
       ;;
     f)
@@ -61,12 +63,12 @@ while getopts ":hf:u:" opt; do
       u_flag=1
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
-      echo "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
-      echo "Options:"
-      echo "  -h, --help    Display this help message"
-      echo "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
-      echo "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
+      echo -e "Invalid option: -$OPTARG" >&2
+      echo -e "Usage: $0 [options] [IP_address1] [IP_address2] ... | [user@IP_address1] ..."
+      echo -e "Options:"
+      echo -e "  -h, --help    Display this help message"
+      echo -e "  -f, --file    Read IP addresses from a file seperated by linebreak.\n Supports user@remote_ip format"
+      echo -e "  -u, --user    Specify the username for the SSH connection.\nUses the current username by default without the flag"
       exit 1
       ;;
   esac
