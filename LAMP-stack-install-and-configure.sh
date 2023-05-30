@@ -12,16 +12,9 @@ fi
 
 if [ "$DISTRO" == "debian" ]; then
     sudo apt-get update
-    sudo apt-get install -y apache2
+    sudo apt-get install -y apache2 mysql-server
 elif [ "$DISTRO" == "rhel" ]; then
-    sudo yum -y install httpd
-fi
-
-
-if [ "$DISTRO" == "debian" ]; then
-    sudo apt-get install -y mariadb-server
-elif [ "$DISTRO" == "rhel" ]; then
-    sudo yum -y install mariadb-server
+    sudo yum -y install httpd mariadb mariadb-server
 fi
 
 
@@ -29,10 +22,11 @@ if [ "$DISTRO" == "debian" ]; then
     sudo apt-get install -y php libapache2-mod-php php-mysql
 elif [ "$DISTRO" == "rhel" ]; then
     sudo yum -y module install php
-    sudo yum -y install php-mysqlnd
+    sudo yum -y install php-mysql php-fpm
 fi
 
-# Set up virtual host
+
+
 if [ "$DISTRO" == "debian" ]; then
     sudo bash -c "cat > /etc/apache2/sites-available/myapp.conf << EOL
 <VirtualHost *:80>
@@ -55,7 +49,8 @@ elif [ "$DISTRO" == "rhel" ]; then
 EOL"
 fi
 
-# Restart apache
+
+
 if [ "$DISTRO" == "debian" ]; then
     sudo systemctl enable --now apache2
 elif [ "$DISTRO" == "rhel" ]; then
