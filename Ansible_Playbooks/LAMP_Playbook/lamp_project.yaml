@@ -1,0 +1,15 @@
+--- 
+- name: Install LEMP
+  hosts: all
+  become: yes
+  roles:
+    - debian
+  when: ansible_os_family=='Debian'
+
+- name: Install LAMP on RHEL7
+  hosts: all
+  become: yes
+  roles:
+    - rhel7
+  when: ansible_os_family=='RedHat'
+

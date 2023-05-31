@@ -1,0 +1,15 @@
+pkg_list:
+  - httpd
+  - php
+  - php-mysql
+  - mysql-server
+
+srvc_list:
+  - name: httpd
+    state: started
+    enabled: yes
+  - name: mysqld
+    state: started
+    enabled: yes
+
+server_address: 192.168.56.107

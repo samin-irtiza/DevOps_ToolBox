@@ -1,0 +1,47 @@
+---
+- name: "Repo PHP 7.4"
+  apt_repository:
+    repo="ppa:ondrej/php"
+
+- name: "Updating the repo"
+  apt: update_cache=yes
+
+- name: Installing packages
+  apt:
+    name: "{{pkg_list}}"
+    state: present
+  #with_items: "{{pkg_list}}"
+
+- name: Start and Enable mysql.service
+  service:
+    name: mysql.service
+    state: started
+    enabled: yes
+
+- name: Allow incoming connections on port 80
+  ufw:
+    rule: allow
+    port: '80'
+
+- name: Copy Nginx sites-available file
+  copy:
+    src: default 
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart Nginx
+    - Notify message
+  changed_when: true
+
+#- name: Link default config to Nginx site-enabled
+#  command: ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default 
+
+- name: Copy web files to /var/www/html
+  template:
+    src: index.php
+    dest: /var/www/html/index.php
+    owner: root
+    group: root
+    mode: "0755"

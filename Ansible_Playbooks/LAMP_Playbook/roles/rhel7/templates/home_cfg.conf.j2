@@ -1,0 +1,7 @@
+<VirtualHost *:80>
+    DocumentRoot "{{app_root}}"
+    ServerName {{server_address}}
+    ErrorLog /var/log/httpd/error.log
+    CustomLog /var/log/httpd/access.log combined
+    # Other directives here
+</VirtualHost>

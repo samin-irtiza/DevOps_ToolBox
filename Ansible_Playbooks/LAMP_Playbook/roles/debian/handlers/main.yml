@@ -1,0 +1,7 @@
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+- name: Notify message
+  debug:
+    msg: "Restarted Nginx"
